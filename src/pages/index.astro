@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('posts'))
+  .filter(post => !post.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout title="MountainMouth Inc">
+  <div class="index-content framed">
+    <h1 id="hello-there">Hello World</h1>
+    <p>We are Dev & Investment Companey</p>
+    <p>
+      “Talk is cheap. Show me the code.”
+    </p>
+    <p>
+      <a href="https://x.com/halfin/status/1110302988?s=20">
+        <img src="https://i.gyazo.com/d445552beee8a91feb19c9ad91d17214.jpg" alt="The Big Short" />
+      </a>
+    </p>
+  </div>
+  
+  <div class="posts">
+    {posts.map((post) => <PostCard post={post} />)}
+  </div>
+</BaseLayout>
